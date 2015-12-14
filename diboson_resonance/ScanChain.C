@@ -21,9 +21,9 @@
 typedef ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > LorentzVector;
 
 // CMS3
-#include "../MT2Analysis/MT2CORE/mt2tree.cc"
-#include "../CORE/Tools/goodrun.cc"
-#include "../CORE/Tools/dorky/dorky.cc"
+#include "../../MT2Analysis/MT2CORE/mt2tree.cc"
+#include "../../CORE/Tools/goodrun.cc"
+#include "../../CORE/Tools/dorky/dorky.cc"
 
 using namespace std;
 // using namespace tas;
@@ -116,7 +116,7 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
     mt2tree t;
 
     bool print = true;
-    
+    int i_permille_old = 0;    
     // File Loop
     while ( (currentFile = (TFile*)fileIter.Next()) ) {
 
@@ -148,7 +148,16 @@ int ScanChain( TChain* chain, bool fast = true, int nEvents = -1, string skimFil
             }
             
             // Progress
-            mt2tree::progress( nEventsTotal, nEventsChain );
+            int i_permille = (int)floor(10000 * nEventsTotal / float(nEventsChain));
+            if (i_permille != i_permille_old) {
+                // xterm magic from L. Vacavant and A. Cerri
+                if (isatty(1)) {
+                    printf("\015\033[32m ---> \033[1m\033[31m%5.2f%%"
+                            "\033[0m\033[32m <---\033[0m\015", i_permille/100.);
+                    fflush(stdout);
+                }
+                i_permille_old = i_permille;
+            }
             
             //
             // start with the 4 lepton search

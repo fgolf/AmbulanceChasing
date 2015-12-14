@@ -6,9 +6,9 @@
 #include "TFile.h"
 #include "TObjArray.h"
 #include "TTree.h"
-#include "../CORE/Tools/goodrun.cc"
+#include "../../CORE/Tools/goodrun.cc"
 #include "TMath.h"
-#include "../MT2Analysis/MT2CORE/mt2tree.cc"
+#include "../../MT2Analysis/MT2CORE/mt2tree.cc"
 #include "Math/LorentzVector.h"
 typedef ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<float> > LorentzVector;
 
